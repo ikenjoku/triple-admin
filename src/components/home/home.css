@@ -1,0 +1,77 @@
+header {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 70px;
+  -webkit-box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 70px);
+}
+
+.logo {
+  max-width: 12em;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-login {
+  border: 2px solid #00b25c;
+  border-radius: 5px;
+  margin-top: 8px;
+  background-color: #ffffff;
+  font-size: 24px;
+  padding: 12px 38px;
+  color: #00b25c;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+.btn-login:hover {
+  color: #ffffff;
+  background-color: #00b25c;
+}
+
+.btn-login:active {
+  background-color: #01914b;
+  border: 2px solid #01914b;
+}
+
+.welcome-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 32px;
+  margin: 0;
+  color: #f8f8f8;
+  text-align: center;
+}
+
+.admin-text {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin-top: 10px;
+  color: #f8f8f8
+}
+
+.login-bg {
+  background: linear-gradient(rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.4)),
+    url('https://res.cloudinary.com/ikeenjoku/image/upload/v1531582495/bookameal/homepage-splash.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
