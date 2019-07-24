@@ -1,0 +1,10 @@
+.mainapp-layout {
+  height: 100vh;
+}
+
+.mainapp-content {
+  min-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
