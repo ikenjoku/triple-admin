@@ -1,8 +1,16 @@
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+
 import MainPage from '../components/resetPassword';
 import LoginPage from '../components/login';
 
 
 const mainRouteConfig = [
+  {
+    path: '/app',
+    component: () => <Redirect to='/app/dashboard'/>,
+    exact:true,
+  },
   {
     key:'dashboard',
     path: '/app/dashboard',

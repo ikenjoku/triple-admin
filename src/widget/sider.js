@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Layout, Menu, Icon } from 'antd';
-
-//local imports
-import ResourceDrawer from './resource';
+import './header.css';
 
 const { Sider } = Layout;
 const MenuItem = Menu.Item;
@@ -45,34 +43,23 @@ const topMenuItems = (mainRoutes) => mainRoutes.map((route) => {
 
 
 class SideNavbar extends Component {
-  state = {
-    contactDrawer: false,
-  }
-  toggleContactDrawer = () => this.setState(({contactDrawer}) => ({contactDrawer:!contactDrawer}));
 
   render() {
+    const { trigger, collapsed } = this.props;
 
     const selectedkey = selectedKeys(window.location.pathname);
     return (
-      <Sider defaultCollapsed className='sidebar'>
+      <Sider trigger={trigger} collapsible collapsed={collapsed} className='sidebar-color'>
         <Link to='/app'><div className='small-logo'></div></Link>
-        <Menu theme='dark' mode='vertical' className='sidebar-menu' selectedKeys={[selectedkey]}>
+        <Menu theme='light' mode='vertical' className='sidebar-menu sidebar-color' selectedKeys={[selectedkey]}>
           <ItemGroup>
             <MenuDivider />
             { topMenuItems(mainRoutes) }
           </ItemGroup>
           <ItemGroup>
             <MenuDivider />
-            <MenuItem key="questions" onClick={this.toggleContactDrawer}>
-              <Icon component={() => (<FontAwesomeIcon icon='question-circle'/>)}/>
-              <span>Resources</span>
-            </MenuItem>
           </ItemGroup>
         </Menu>
-        <ResourceDrawer
-          open={this.state.contactDrawer}
-          closeDrawer={this.toggleContactDrawer}
-        />
       </Sider>
     )
   }

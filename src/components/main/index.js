@@ -19,14 +19,24 @@ const mainRoutes = mainRouteConfig.map((appRoute,key) => (
   );
 
 class Main extends Component {
+  state = {
+    collapsed: false,
+  };
+
+  toggleSideBar = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
 
   render() {
+    const  { collapsed } = this.state;
     return (
       <Layout className='mainapp-layout'>
-        <SideNavbar toggleContactDrawer={this.toggleContactDrawer}/>
+        <SideNavbar trigger={null} collapsed={collapsed} />
         <Layout>
           <Content className='mainapp-content'>
-            <Header />
+            <Header onClick={this.toggleSideBar} collapsed={collapsed}/>
             <Switch>
               {mainRoutes}
               <Route component={NoMatch}/>
