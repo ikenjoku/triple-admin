@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 
-import { Layout, Select, Dropdown, Menu, Avatar, Icon } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Layout, Dropdown, Menu, Avatar, Icon } from 'antd';
 import './header.css';
 
 const { Header } = Layout;
-const { Option } = Select;
 const MenuItem = Menu.Item;
-const MenuDivider = Menu.Divider;
 
 const HeaderDropdown = ({logout})  =>(
   <Menu className='header-dropdown'>

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { NavLink, Link, withRouter } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Layout, Menu, Icon } from 'antd';
 import './header.css';
 
 const { Sider } = Layout;
 const MenuItem = Menu.Item;
-const SubMenu = Menu.SubMenu;
 const ItemGroup = Menu.ItemGroup;
 const MenuDivider = Menu.Divider;
 

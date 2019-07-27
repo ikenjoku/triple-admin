@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 
 import NoMatch from '../noMatch';
@@ -20,7 +20,7 @@ const mainRoutes = mainRouteConfig.map((appRoute,key) => (
 
 class Main extends Component {
   state = {
-    collapsed: false,
+    collapsed: true,
   };
 
   toggleSideBar = () => {
