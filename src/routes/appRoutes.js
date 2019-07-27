@@ -8,7 +8,7 @@ export default [
   { path: "/", component: HomePage, exact: true },
   { path: "/app", component: MainApp },
   { path: "/login", component: LoginPage },
-  { path: "/password_reset", component: ResetPasswordPage },
+  { path: "/reset_password", component: ResetPasswordPage },
   { component: NoMatch },
 ];
 
