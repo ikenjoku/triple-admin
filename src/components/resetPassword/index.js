@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Header from '../header/header';
 import './resetPassword.scss'
 
-export class Login extends Component {
+export class ResetPasword extends Component {
   state = {
     data: {
       password: '',
@@ -76,4 +76,4 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+export default ResetPasword;
