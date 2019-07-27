@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import ManageAdmin from '../components/manageAdmin/manageAdmin';
+
 const mainRouteConfig = [
   {
     path: '/app',
@@ -37,9 +39,18 @@ const mainRouteConfig = [
   {
     key:'admin',
     path: '/app/manage-admin',
-    component: () => <p>Manage Admins</p>,
+    component: ManageAdmin,
     message: 'Manage Admin',
     icon: 'headset',
+    requirePermission:['manager'],
+    exact: true,
+  },
+  {
+    key:'dashboard',
+    path: '/app/dashboard',
+    component: () => <p>Dashboard - todays stats and all time</p>,
+    message: 'Dashboard',
+    icon: 'chart-bar',
     requirePermission:['manager'],
     exact: true,
   },

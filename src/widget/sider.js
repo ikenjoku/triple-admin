@@ -43,6 +43,14 @@ const mainRoutes = [
     requirePermission:['manager'],
     exact: true,
   },
+  {
+    key:'dashboard',
+    path: '/app/dashboard',
+    message: 'Dashboard',
+    icon: 'chart-bar',
+    requirePermission:['manager'],
+    exact: true,
+  },
 ]
 
 const topMenuItems = (mainRoutes) => mainRoutes.map((route) => {
