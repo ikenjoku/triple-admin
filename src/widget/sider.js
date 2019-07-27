@@ -12,21 +12,37 @@ const MenuDivider = Menu.Divider;
 const selectedKeys = pathname => pathname.split('/')[2]
 const mainRoutes = [
   {
-    key:'dashboard',
-    path: '/app/dashboard',
-    message: 'Dashboard',
-    icon: 'chart-bar',
-    requirePermission:'admin',
+    key:'orders',
+    path: '/app/orders',
+    message: 'Incoming Orders',
+    icon: 'history',
+    requirePermission:['staff', 'manager'],
     exact: true,
   },
   {
-    key:'manager',
-    path: '/app/manager',
-    message: 'Files',
-    icon: 'folder',
-    requirePermission:'superAdmin',
+    key:'manage-menu',
+    path: '/app/manage-menu',
+    message: 'Manage Menu',
+    icon: 'bread-slice',
+    requirePermission:['manager'],
     exact: true,
-  }
+  },
+  {
+    key:'manage-highlights',
+    path: '/app/manage-highlights',
+    message: 'Manage Highlights',
+    icon: 'newspaper',
+    requirePermission:['manager'],
+    exact: true,
+  },
+  {
+    key:'manage-admin',
+    path: '/app/manage-admin',
+    message: 'Manage Admin',
+    icon: 'headset',
+    requirePermission:['manager'],
+    exact: true,
+  },
 ]
 
 const topMenuItems = (mainRoutes) => mainRoutes.map((route) => {
