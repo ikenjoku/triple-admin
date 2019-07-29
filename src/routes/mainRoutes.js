@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import ManageAdmin from '../components/manageAdmin/manageAdmin';
+import ManageMenu from '../components/manageMenu/manageMenu';
 
 const mainRouteConfig = [
   {
@@ -21,7 +22,7 @@ const mainRouteConfig = [
   {
     key:'menu',
     path: '/app/manage-menu',
-    component: () => <p>Manage Menu</p>,
+    component: ManageMenu,
     message: 'Manage Menu',
     icon: 'bread-slice',
     requirePermission:['manager'],
