@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 import ManageAdmin from '../components/manageAdmin/manageAdmin';
 import ManageMenu from '../components/manageMenu/manageMenu';
+import ManageHighlights from '../components/manageHighlights/manageHighlights';
 
 const mainRouteConfig = [
   {
@@ -31,7 +32,7 @@ const mainRouteConfig = [
   {
     key:'highlights',
     path: '/app/manage-highlights',
-    component: () => <p>Manage Highlights</p>,
+    component: ManageHighlights,
     message: 'Manage Highlights',
     icon: 'newspaper',
     requirePermission:['manager'],

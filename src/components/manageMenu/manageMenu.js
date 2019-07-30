@@ -25,7 +25,7 @@ export class ManageMenu extends Component {
         <div>	&#8358;{meal.price}</div>
         <div>
           <span style={{ marginLeft: '25px' }}>
-            <FontAwesomeIcon icon="edit" className="remove-btn" />
+            <FontAwesomeIcon icon="edit" className="edit-btn" />
           </span>
           <span style={{ marginLeft: '25px' }}>
             <FontAwesomeIcon icon="trash-alt" className="remove-btn" />
