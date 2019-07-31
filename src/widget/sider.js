@@ -44,9 +44,9 @@ const mainRoutes = [
     exact: true,
   },
   {
-    key:'dashboard',
-    path: '/app/dashboard',
-    message: 'Dashboard',
+    key:'reports',
+    path: '/app/reports',
+    message: 'Reports',
     icon: 'chart-bar',
     requirePermission:['manager'],
     exact: true,

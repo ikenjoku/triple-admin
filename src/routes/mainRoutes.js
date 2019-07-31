@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import ManageAdmin from '../components/manageAdmin/manageAdmin';
+import Report from '../components/report/report';
 import ManageMenu from '../components/manageMenu/manageMenu';
 import ManageHighlights from '../components/manageHighlights/manageHighlights';
 
@@ -48,10 +49,10 @@ const mainRouteConfig = [
     exact: true,
   },
   {
-    key:'dashboard',
-    path: '/app/dashboard',
-    component: () => <p>Dashboard - todays stats and all time</p>,
-    message: 'Dashboard',
+    key:'reports',
+    path: '/app/reports',
+    component: Report,
+    message: 'Reports',
     icon: 'chart-bar',
     requirePermission:['manager'],
     exact: true,
