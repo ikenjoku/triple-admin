@@ -5,6 +5,7 @@ import ManageAdmin from '../components/manageAdmin/manageAdmin';
 import Report from '../components/report/report';
 import ManageMenu from '../components/manageMenu/manageMenu';
 import ManageHighlights from '../components/manageHighlights/manageHighlights';
+import IncomingOrders from '../components/incomingOrders/incomingOrders';
 
 const mainRouteConfig = [
   {
@@ -15,7 +16,7 @@ const mainRouteConfig = [
   {
     key:'orders',
     path: '/app/orders',
-    component: () => <p>Orders Page</p>,
+    component: IncomingOrders,
     message: 'Incoming Orders',
     icon: 'history',
     requirePermission:['staff', 'manager'],
