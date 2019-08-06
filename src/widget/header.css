@@ -1,0 +1,37 @@
+.mainapp-header {
+  background: #f0f2f5;
+  padding: 0 3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.header-select {
+  width: 200px;
+  margin-right: 10px;
+}
+
+.header-icon {
+  /* margin: 0 10px; */
+  color: #00b25c;
+  font-size: 23px
+}
+
+.sidebar-color {
+  background-color: #007f39;
+}
+
+.ant-menu-item-selected > a, .ant-menu-item-selected > a:hover {
+  color: #be2f79;
+}
+
+.ant-menu-item > a {
+  color: #f0f2f5;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #ad48af;
+}
