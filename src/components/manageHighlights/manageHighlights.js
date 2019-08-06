@@ -30,9 +30,9 @@ export class ManageHighlights extends Component {
     ],
   }
 
-  renderHighlight = (highlight) => {
+  renderHighlight = (highlight, index) => {
     return (
-      <div className="contain-highlight">
+      <div key={index} className="contain-highlight">
         <div>
           <img src={highlight.imgurl} alt="highlight" className="highlight-image" />
         </div>

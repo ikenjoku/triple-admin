@@ -254,8 +254,8 @@ class IncomingOrders extends Component {
           </div>
           <div style={{ margin: '0px auto' }}>
               {
-                pendingOrder.meals.map(meal => (
-                  <div>
+                pendingOrder.meals.map((meal, index) => (
+                  <div key={index}>
                     <p><span><strong>{meal.qty}</strong>  {meal.name}</span></p>
                   </div>
                 ))
@@ -280,8 +280,8 @@ class IncomingOrders extends Component {
           </div>
           <div style={{ margin: '0px auto' }}>
               {
-                pendingOrder.meals.map(meal => (
-                  <div>
+                pendingOrder.meals.map((meal, index) => (
+                  <div key={index}>
                     <p><span><strong>{meal.qty}</strong>  {meal.name}</span></p>
                   </div>
                 ))

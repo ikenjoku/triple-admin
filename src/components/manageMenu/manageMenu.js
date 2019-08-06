@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchMenu } from '../../redux/actions/mealActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import MealForm from './mealForm';
 import './manageMenu.css';
 export class ManageMenu extends Component {
-  state = {
-    meals: [
-      { name: 'Semo and Meal', description: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.', price: 2400, imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg" },
-      { name: 'Semo and Meal', description: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.', price: 2400, imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg" },
-      { name: 'Semo and Meal', description: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.', price: 2400, imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg" },
-      { name: 'Semo and Meal', description: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.', price: 2400, imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg" },
-      { name: 'Semo and Meal', description: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.', price: 2400, imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg" },
-    ],
+
+  componentDidMount() {
+    this.props.fetchMenu();
   }
 
-  renderMeal = (meal) => {
+  renderMeal = (meal, index) => {
     return (
-      <div className="contain-meal">
+      <div key={index} className="contain-meal">
         <div>
           <img src={meal.imgurl} alt="meal" className="meal-image" />
         </div>
@@ -34,7 +31,28 @@ export class ManageMenu extends Component {
       </div>
     );
   }
+
+  renderNoContent = () => {
+    return (
+      <div>Nothing to see here</div>
+    );
+  }
+
+  renderLoader = () => {
+    return (
+      <div>Loading</div>
+    );
+  }
   render() {
+    const { menu, isLoading } = this.props;
+    const renderContent = menu.length ? (
+      <div className="contain-meal-list">
+        {
+          menu.map(this.renderMeal)
+        }
+      </div>
+    ): this.renderNoContent();
+
     return (
       <div>
         <p className="page-title">Manage Menu</p>
@@ -43,14 +61,18 @@ export class ManageMenu extends Component {
           <MealForm />
           <hr />
         </div>
-        <div className="contain-meal-list">
-          {
-            this.state.meals.map(this.renderMeal)
-          }
-        </div>
+        {
+          isLoading ? this.renderLoader() : renderContent
+        }
       </div>
     )
   }
 }
 
-export default ManageMenu
+const mapStateToProps = ({ mealReducer }) => ({
+  menu: mealReducer.menu,
+  isLoading: mealReducer.isLoading,
+  error: mealReducer.error,
+});
+
+export default connect(mapStateToProps, { fetchMenu })(ManageMenu);

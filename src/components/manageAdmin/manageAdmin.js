@@ -25,9 +25,9 @@ export class ManageAdmin extends Component {
     this.setState(() => ({ data }));
   }
 
-  renderStaffMember = member => {
+  renderStaffMember = (member, index) => {
     return (
-      <div className="contain-staff-member">
+      <div key={index} className="contain-staff-member">
         <h3>{`${member.firstname} ${member.lastname} ${member.email}`}</h3>
         <span style={{ marginLeft: '25px' }}>
           <FontAwesomeIcon icon="window-close" className="remove-btn" />
