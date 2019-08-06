@@ -1,0 +1,71 @@
+.orders-container {
+  padding: 20px;
+}
+
+.contain-order {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #01914b;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.contain-order:hover {
+  -webkit-box-shadow: 0px -1px 13px -3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -1px 13px -3px rgba(0,0,0,0.75);
+  box-shadow: 0px -1px 13px -3px rgba(0,0,0,0.75);
+  margin-bottom: 20px;
+}
+
+.order-box {
+  margin: 0px auto;
+  font-weight: bold;
+}
+
+.contain-pending-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.action-btn {
+  flex: 1;
+  border: 1px solid #00b25c;
+  border-radius: 5px;
+  margin-top: 8px;
+  background-color: #ffffff;
+  font-size: 20px;
+  color: #00b25c;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+.action-btn:hover {
+  color: #ffffff;
+  background-color: #00b25c;
+}
+
+.action-btn:active {
+  background-color: #01914b;
+  border: 2px solid #01914b;
+}
+
+@media screen and (min-width: 661px){
+  .contain-order {
+    flex-direction: row;
+  }
+  .action-btn {
+    height: 50px;
+    width: 50%;
+    align-self: center;
+  }
+  .order-box{
+    align-self: center;
+  }
+}
+
+@media screen and (min-width: 992px){
+  .admin-form-wrapper {
+    width: 700px;
+  }
+}

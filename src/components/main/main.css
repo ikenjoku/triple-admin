@@ -1,0 +1,20 @@
+.mainapp-layout {
+  height: 100vh;
+}
+
+.mainapp-content {
+  min-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.small-logo {
+  height: 50px;
+  background-image: url('../../assets/tripleLogoWeb.png');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: 5px;
+  cursor: pointer;
+}
