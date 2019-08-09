@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Layout, Menu, Icon } from 'antd';
@@ -10,82 +11,103 @@ const ItemGroup = Menu.ItemGroup;
 const MenuDivider = Menu.Divider;
 
 const selectedKeys = pathname => pathname.split('/')[2]
-const mainRoutes = [
+const staffRoutes = [
   {
-    key:'orders',
+    key: 'orders',
     path: '/app/orders',
     message: 'Incoming Orders',
     icon: 'history',
-    requirePermission:['staff', 'manager'],
+    requirePermission: ['staff', 'manager'],
     exact: true,
   },
+];
+
+const managerRoutes = [
   {
-    key:'manage-menu',
+    key: 'manage-menu',
     path: '/app/manage-menu',
     message: 'Manage Menu',
     icon: 'bread-slice',
-    requirePermission:['manager'],
+    requirePermission: ['manager'],
     exact: true,
   },
   {
-    key:'manage-highlights',
+    key: 'manage-highlights',
     path: '/app/manage-highlights',
     message: 'Manage Highlights',
     icon: 'newspaper',
-    requirePermission:['manager'],
+    requirePermission: ['manager'],
     exact: true,
   },
   {
-    key:'manage-admin',
+    key: 'manage-admin',
     path: '/app/manage-admin',
     message: 'Manage Admin',
     icon: 'headset',
-    requirePermission:['manager'],
+    requirePermission: ['manager'],
     exact: true,
   },
   {
-    key:'reports',
+    key: 'reports',
     path: '/app/reports',
     message: 'Reports',
     icon: 'chart-bar',
-    requirePermission:['manager'],
+    requirePermission: ['manager'],
     exact: true,
   },
-]
+];
 
-const topMenuItems = (mainRoutes) => mainRoutes.map((route) => {
-    return (
-      <MenuItem key={route.key}>
-        <NavLink to={route.path} >
-          <Icon component={() => (<FontAwesomeIcon icon={route.icon}/>)}/>
-          <span>{route.message}</span>
-        </NavLink>
-      </MenuItem>
-    )
-})
+const staffMenuItems = (staffRoutes, userRoles) => staffRoutes.map((route) => {
+  const hasPermission = userRoles.some(role => route.requirePermission.includes(role));
+  if (!hasPermission) return null;
+  return (
+    <MenuItem key={route.key}>
+      <NavLink to={route.path} >
+        <Icon component={() => (<FontAwesomeIcon icon={route.icon} />)} />
+        <span>{route.message}</span>
+      </NavLink>
+    </MenuItem>
+  )
+});
+
+const managerMenuItems = (managerRoutes, userRoles) => managerRoutes.map((route) => {
+  const hasPermission = userRoles.some(role => route.requirePermission.includes(role));
+  if (!hasPermission) return null;
+  return (
+    <MenuItem key={route.key}>
+      <NavLink to={route.path} >
+        <Icon component={() => (<FontAwesomeIcon icon={route.icon} />)} />
+        <span>{route.message}</span>
+      </NavLink>
+    </MenuItem>
+  )
+});
 
 
 class SideNavbar extends Component {
 
   render() {
-    const { trigger, collapsed } = this.props;
+    const { trigger, collapsed, user } = this.props;
 
     const selectedkey = selectedKeys(window.location.pathname);
     return (
       <Sider trigger={trigger} collapsible collapsed={collapsed} className='sidebar-color'>
         <Link to='/app'><div className='small-logo'></div></Link>
         <Menu theme='light' mode='vertical' className='sidebar-menu sidebar-color' selectedKeys={[selectedkey]}>
+        <MenuDivider />
           <ItemGroup>
-            <MenuDivider />
-            { topMenuItems(mainRoutes) }
+            {staffMenuItems(staffRoutes, user.role)}
+            {managerMenuItems(managerRoutes, user.role)}
           </ItemGroup>
-          <ItemGroup>
-            <MenuDivider />
-          </ItemGroup>
+        <MenuDivider />
         </Menu>
       </Sider>
     )
   }
-}
+};
 
-export default SideNavbar;
+const mapStateToProps = ({ authReducer }) => ({
+  user: authReducer.user,
+});
+
+export default connect(mapStateToProps, {})(SideNavbar);
