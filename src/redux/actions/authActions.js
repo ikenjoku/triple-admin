@@ -34,10 +34,10 @@ export const loginUser = (loginDetails) => (dispatch) => {
     .then(response => {
       dispatch(login_user_success(response.data.user));
       API.defaults.headers.common['authorization'] = response.data.token;
+      localStorage.setItem('triple7', response.data.token);
       notification.success({
         message: response.data.message,
       });
-      // history.push('/app/orders');
     })
     .catch(error => {
       if (error.response) {
@@ -56,6 +56,6 @@ export const loginUser = (loginDetails) => (dispatch) => {
 
 export const logoutAUser = () => (dispatch) => {
   API.defaults.headers.common['authorization'] = '';
-  // NavigationService.navigate('Auth');
+  localStorage.removeItem('triple7');
   dispatch(logout_user());
 };
