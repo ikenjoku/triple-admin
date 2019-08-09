@@ -7,7 +7,7 @@ import ManageMenu from '../components/manageMenu/manageMenu';
 import ManageHighlights from '../components/manageHighlights/manageHighlights';
 import IncomingOrders from '../components/incomingOrders/incomingOrders';
 
-const mainRouteConfig = [
+const staffRouteConfig = [
   {
     path: '/app',
     component: () => <Redirect to='/app/orders'/>,
@@ -22,6 +22,9 @@ const mainRouteConfig = [
     requirePermission:['staff', 'manager'],
     exact: true,
   },
+];
+
+const managerRouteConfig = [
   {
     key:'menu',
     path: '/app/manage-menu',
@@ -58,6 +61,6 @@ const mainRouteConfig = [
     requirePermission:['manager'],
     exact: true,
   },
-]
+];
 
-export { mainRouteConfig };
+export { staffRouteConfig, managerRouteConfig };
