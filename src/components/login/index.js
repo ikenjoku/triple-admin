@@ -29,7 +29,7 @@ export class Login extends Component {
       this.setState(() => ({ error: '' }));
       this.props.loginUser({ email, password });
     } else {
-      this.setState(() => ({ error: 'email and password are required' }));
+      this.setState(() => ({ error: 'Your email and password are required' }));
     }
   }
 
