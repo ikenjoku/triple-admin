@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Layout, Menu, Icon } from 'antd';
 import './header.css';
@@ -87,9 +87,9 @@ const managerMenuItems = (managerRoutes, userRoles) => managerRoutes.map((route)
 class SideNavbar extends Component {
 
   render() {
-    const { trigger, collapsed, user } = this.props;
+    const { trigger, collapsed, user, location } = this.props;
 
-    const selectedkey = selectedKeys(window.location.pathname);
+    const selectedkey = selectedKeys(location.pathname);
     return (
       <Sider trigger={trigger} collapsible collapsed={collapsed} className='sidebar-color'>
         <Link to='/app'><div className='small-logo'></div></Link>
@@ -110,4 +110,6 @@ const mapStateToProps = ({ authReducer }) => ({
   user: authReducer.user,
 });
 
-export default connect(mapStateToProps, {})(SideNavbar);
+const connectedSider = connect(mapStateToProps, {})(SideNavbar);
+
+export default withRouter(connectedSider);
