@@ -13,5 +13,10 @@ export default {
     isLoading: false,
     highlights: [],
     error: null,
-  }
+  },
+  adminReducer: {
+    isLoading: false,
+    staff: [],
+    error: null,
+  },
 };
