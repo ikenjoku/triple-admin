@@ -1,7 +1,7 @@
-import axios from 'axios';
+import API from '../redux/axiosConfig';
 
-export const setAuthorizationToken = (token) => {
+export const setAuthorizationToken = async (token) => {
   if (token) {
-    axios.defaults.headers.common['x-access-token'] = token;
+    API.defaults.headers.common['x-access-token'] = token;
   }
 };
