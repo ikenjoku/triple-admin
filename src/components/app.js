@@ -8,10 +8,12 @@ import appRoutes from '../routes/appRoutes';
 import { setAuthorizationToken } from '../utils/authHelpers';
 import { login_user_success } from '../redux/actions/authActions';
 
-if (localStorage.triple7) {
-  const decoded = jwtDecode(localStorage.triple7);
+
+const userToken = localStorage.getItem('triple7');
+if (userToken) {
+  const decoded = jwtDecode(userToken);
   const { user } = decoded;
-  setAuthorizationToken(localStorage.triple7);
+  setAuthorizationToken(userToken);
   store.dispatch(login_user_success({
       id: user._id,
       firstname: user.firstname,
