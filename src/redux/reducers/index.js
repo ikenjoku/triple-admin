@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import mealReducer from './mealReducer';
 import adminReducer from './adminReducer';
+import orderReducer from './orderReducer';
 // import highlightReducer from './highlightReducer';
 import initialState from './initialState';
 import { LOGOUT_USER } from '../actionTypes';
@@ -10,6 +11,7 @@ const baseReducer = combineReducers({
   authReducer,
   mealReducer,
   adminReducer,
+  orderReducer,
 });
 
 const rootReducer = (state, action) => {

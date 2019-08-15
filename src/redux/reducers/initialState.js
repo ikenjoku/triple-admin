@@ -9,6 +9,11 @@ export default {
     menu: [],
     error: null,
   },
+  orderReducer: {
+    isLoading: false,
+    pendingOrders: [],
+    error: null,
+  },
   highlightReducer: {
     isLoading: false,
     highlights: [],
