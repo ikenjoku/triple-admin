@@ -23,6 +23,17 @@
   font-weight: bold;
 }
 
+.deliver-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.delivery-address-text {
+  max-width: 250px;
+  text-align: center;
+}
+
 .contain-pending-buttons {
   display: flex;
   flex-direction: row;
@@ -61,6 +72,15 @@
   }
   .order-box{
     align-self: center;
+  }
+  .deliver-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .delivery-address-text {
+    max-width: 200px;
+    text-align: left;
   }
 }
 
