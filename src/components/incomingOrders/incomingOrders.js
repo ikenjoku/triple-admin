@@ -15,7 +15,7 @@ class IncomingOrders extends Component {
   renderPendingOrder = (pendingOrder) => {
     if (pendingOrder.seats === undefined) {
       return (
-        <div className="contain-order">
+        <div key={pendingOrder._id} className="contain-order">
           <div className="order-box">
             <p>{pendingOrder.customerName}</p>
             <p>08086082224</p>
@@ -50,7 +50,7 @@ class IncomingOrders extends Component {
       );
     }
     return (
-      <div className="contain-order">
+      <div key={pendingOrder._id} className="contain-order">
         <div className="order-box">
           <p>{pendingOrder.customerName}</p>
           <p>08086082224</p>
