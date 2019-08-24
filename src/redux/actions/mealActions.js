@@ -51,9 +51,10 @@ export const edit_meal = () => ({
   isLoading: true,
 });
 
-export const edit_meal_success = (updatedMeal) => ({
+export const edit_meal_success = (updatedMeal, mealId) => ({
   type: EDIT_MEAL_SUCCESS,
-  meal: updatedMeal,
+  updatedMeal,
+  mealId,
 });
 
 export const edit_meal_failure = (error) => ({
@@ -66,9 +67,9 @@ export const delete_meal = () => ({
   isLoading: true,
 });
 
-export const delete_meal_success = (updatedMeal) => ({
+export const delete_meal_success = (mealId) => ({
   type: DELETE_MEAL_SUCCESS,
-  meal: updatedMeal,
+  mealId,
 });
 
 export const delete_meal_failure = (error) => ({
@@ -113,32 +114,32 @@ export const addMeal = (mealData) => (dispatch) => {
     });
 };
 
-export const editMeal = () => (dispatch) => {
-  dispatch(fetch_menu());
-  return API.get('/meals')
+export const editMeal = (updates, mealId) => (dispatch) => {
+  dispatch(edit_meal());
+  return API.put(`/meals/${mealId}`, updates)
     .then(response => {
-      dispatch(fetch_menu_success(response.data.meals));
+      dispatch(fetchMenu());
     })
     .catch(error => {
       if (error.response) {
-        dispatch(fetch_menu_failure(error.response.data));
+        dispatch(edit_meal_failure(error.response.data));
       } else {
-        dispatch(fetch_menu_failure({ message: error.message }));
+        dispatch(edit_meal_failure({ message: error.message }));
       }
     });
 };
 
-export const deleteMeal = () => (dispatch) => {
-  dispatch(fetch_menu());
-  return API.get('/meals')
+export const deleteMeal = (mealId) => (dispatch) => {
+  dispatch(delete_meal());
+  return API.delete(`/meals/${mealId}`)
     .then(response => {
-      dispatch(fetch_menu_success(response.data.meals));
+      dispatch(delete_meal_success(mealId));
     })
     .catch(error => {
       if (error.response) {
-        dispatch(fetch_menu_failure(error.response.data));
+        dispatch(delete_meal_failure(error.response.data));
       } else {
-        dispatch(fetch_menu_failure({ message: error.message }));
+        dispatch(delete_meal_failure({ message: error.message }));
       }
     });
 };
