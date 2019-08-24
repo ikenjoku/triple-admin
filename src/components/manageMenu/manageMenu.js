@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchMenu, addMeal } from '../../redux/actions/mealActions';
+import { fetchMenu, addMeal, editMeal, deleteMeal } from '../../redux/actions/mealActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './manageMenu.css';
 export class ManageMenu extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isEditing: false,
       meal: {
@@ -15,9 +14,11 @@ export class ManageMenu extends Component {
         description: '',
         price: '',
         imageurl: '',
+        category: ''
       },
       error: '',
     };
+    this.formRef = null;
   }
 
   resetState = () => {
@@ -28,6 +29,7 @@ export class ManageMenu extends Component {
         description: '',
         price: '',
         imageurl: '',
+        category: ''
       },
       error: '',
     });
@@ -36,6 +38,8 @@ export class ManageMenu extends Component {
   componentDidMount() {
     this.props.fetchMenu();
   }
+
+  scrollToForm = () => window.scrollTo(0, this.formRef.current.offsetTop)
 
   onFormInput = (event) => {
     event.preventDefault();
@@ -53,7 +57,7 @@ export class ManageMenu extends Component {
   onFormSubmit = (event) => {
     event.preventDefault();
     const { meal, isEditing } = this.state;
-    const { name, price, description, imageurl } = meal;
+    const { name, price, description, imageurl, category } = meal;
     if (name && price && description && imageurl) {
       this.setState(() => ({ error: '' }));
 
@@ -61,16 +65,31 @@ export class ManageMenu extends Component {
       formData.append('name', name);
       formData.append('price', price);
       formData.append('description', description);
-      formData.append('imageurl', imageurl);
+      formData.append('imgurl', imageurl);
+      formData.append('category', category);
+
       if (isEditing) {
-        //edit meal with mealid and newdetails
+        this.props.editMeal(formData, meal._id);
+        this.resetState();
       } else {
-        // this.props.addMeal(formData);
-        console.log('======', formData)
+        this.props.addMeal(formData);
+        this.resetState();
       }
     } else {
       this.setState(() => ({ error: 'Please fill all the fields' }));
     }
+  }
+
+  handleEditMeal = (meal) => {
+    this.setState({
+      meal,
+      isEditing: true,
+    });
+    // this.scrollToForm();
+  }
+
+  handleDeleteMeal = (mealId) => {
+    this.props.deleteMeal(mealId);
   }
 
   renderMeal = (meal, index) => {
@@ -84,10 +103,10 @@ export class ManageMenu extends Component {
         <div>	&#8358;{meal.price}</div>
         <div>
           <span style={{ marginLeft: '25px' }}>
-            <FontAwesomeIcon icon="edit" className="edit-btn" />
+            <FontAwesomeIcon onClick={() => this.handleEditMeal(meal)} icon="edit" className="edit-btn" />
           </span>
           <span style={{ marginLeft: '25px' }}>
-            <FontAwesomeIcon icon="trash-alt" className="remove-btn" />
+            <FontAwesomeIcon onClick={() => this.handleDeleteMeal(meal._id)} icon="trash-alt" className="remove-btn" />
           </span>
         </div>
       </div>
@@ -106,6 +125,7 @@ export class ManageMenu extends Component {
     );
   }
   render() {
+    const { isEditing, meal } = this.state;
     const { menu, isLoading } = this.props;
     const renderContent = menu.length ? (
       <div className="contain-meal-list">
@@ -119,14 +139,15 @@ export class ManageMenu extends Component {
       <div>
         <p className="page-title">Manage Menu</p>
         <div className="meal-form-wrapper">
-          <h2 className="form-title">Add a new meal</h2>
+          <h2 className="form-title">{ isEditing ? `Editing ${meal.name}...` : 'Add a new meal'}</h2>
           <form
             id="meal-form"
             onSubmit={this.onFormSubmit}
             name="mealForm"
             encType="multipart/form-data"
             className="add-meal-form"
-          >
+            ref={node => this.formRef = node}
+            >
             {this.state.error &&
               <div className="alert alert-danger">
                 {this.state.error}
@@ -166,6 +187,15 @@ export class ManageMenu extends Component {
               onChange={this.onFormInput}
             />
 
+            <input
+              className="form-control"
+              type="text"
+              name="category"
+              value={this.state.meal.category}
+              onChange={this.onFormInput}
+              placeholder="Meal Category"
+            />
+
             <div className="contain-btn">
               <input
                 className="btn-control loginsubmitBtn"
@@ -196,4 +226,4 @@ const mapStateToProps = ({ mealReducer }) => ({
   error: mealReducer.error,
 });
 
-export default connect(mapStateToProps, { fetchMenu, addMeal })(ManageMenu);
+export default connect(mapStateToProps, { fetchMenu, addMeal, editMeal, deleteMeal })(ManageMenu);
