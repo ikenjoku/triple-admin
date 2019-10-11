@@ -3,7 +3,7 @@ import authReducer from './authReducer';
 import mealReducer from './mealReducer';
 import adminReducer from './adminReducer';
 import orderReducer from './orderReducer';
-// import highlightReducer from './highlightReducer';
+import highlightReducer from './highlightReducer';
 import initialState from './initialState';
 import { LOGOUT_USER } from '../actionTypes';
 
@@ -12,6 +12,7 @@ const baseReducer = combineReducers({
   mealReducer,
   adminReducer,
   orderReducer,
+  highlightReducer,
 });
 
 const rootReducer = (state, action) => {
