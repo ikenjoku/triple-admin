@@ -23,7 +23,7 @@ export const add_highlight_failure = (error) => ({
 });
 
 // ActionCreators
-export const addhighlight = (highlightData) => (dispatch) => {
+export const addHighlight = (highlightData) => (dispatch) => {
   dispatch(add_highlight());
   return API.post('/highlights', highlightData)
     .then(response => {
