@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addHighlight, fetchHighlights, editHighlight } from '../../redux/actions/highlightActions';
+import { addHighlight, fetchHighlights, editHighlight, deleteHighlight } from '../../redux/actions/highlightActions';
 import './manageHighlights.css';
 
 export class ManageHighlights extends Component {
@@ -81,7 +81,7 @@ export class ManageHighlights extends Component {
               <FontAwesomeIcon onClick={() => this.handleEditHighlight(highlight)} icon="edit" className="edit-btn" />
             </span>
             <span style={{ margin: '10px' }}>
-              <FontAwesomeIcon icon="trash-alt" className="remove-btn" />
+              <FontAwesomeIcon onClick={() => this.handleDeleteHighlight(highlight._id)} icon="trash-alt" className="remove-btn" />
             </span>
           </div>
         </div>
@@ -97,6 +97,10 @@ export class ManageHighlights extends Component {
       highlight,
       isEditing: true,
     });
+  }
+
+  handleDeleteHighlight = (highlightId) => {
+    this.props.deleteHighlight(highlightId);
   }
 
   renderNoContent = () => {
@@ -192,4 +196,4 @@ const mapStateToProps = ({ highlightReducer }) => ({
   error: highlightReducer.error,
 });
 
-export default connect(mapStateToProps, { addHighlight, fetchHighlights, editHighlight })(ManageHighlights);
+export default connect(mapStateToProps, { addHighlight, fetchHighlights, editHighlight, deleteHighlight })(ManageHighlights);
