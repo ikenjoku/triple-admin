@@ -5,6 +5,9 @@ import {
   ADD_HIGHLIGHTS,
   ADD_HIGHLIGHTS_SUCCESS,
   ADD_HIGHLIGHTS_FAILURE,
+  FETCH_HIGHLIGHTS,
+  FETCH_HIGHLIGHTS_SUCCESS,
+  FETCH_HIGHLIGHTS_FAILURE,
 } from '../actionTypes';
 
 export const add_highlight = () => ({
@@ -19,6 +22,21 @@ export const add_highlight_success = (newHighlight) => ({
 
 export const add_highlight_failure = (error) => ({
   type: ADD_HIGHLIGHTS_FAILURE,
+  error,
+});
+
+export const fetch_highlight = () => ({
+  type: FETCH_HIGHLIGHTS,
+  isLoading: true,
+});
+
+export const fetch_highlight_success = (highlights) => ({
+  type: FETCH_HIGHLIGHTS_SUCCESS,
+  highlights,
+});
+
+export const fetch_highlight_failure = (error) => ({
+  type: FETCH_HIGHLIGHTS_FAILURE,
   error,
 });
 
@@ -37,6 +55,27 @@ export const addHighlight = (highlightData) => (dispatch) => {
         });
       } else {
         dispatch(add_highlight_failure({ message: error.message }));
+        notification.error({
+          message: error.message,
+        });
+      }
+    });
+};
+
+export const fetchHighlights = () => (dispatch) => {
+  dispatch(fetch_highlight());
+  return API.get('/highlights')
+    .then(response => {
+      dispatch(fetch_highlight_success(response.data.highlights));
+    })
+    .catch(error => {
+      if (error.response) {
+        dispatch(fetch_highlight_failure(error.response.data));
+        notification.error({
+          message: error.response.data.message,
+        });
+      } else {
+        dispatch(fetch_highlight_failure({ message: error.message }));
         notification.error({
           message: error.message,
         });
