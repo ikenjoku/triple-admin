@@ -18,7 +18,7 @@ class IncomingOrders extends Component {
         <div key={pendingOrder._id} className="contain-order">
           <div className="order-box">
             <p>{pendingOrder.customerName}</p>
-            <p>08086082224</p>
+            <p>{pendingOrder.phone}</p>
           </div>
           <div style={{ margin: '0px auto' }}>
             {
@@ -33,9 +33,9 @@ class IncomingOrders extends Component {
             <p>&#8358; {pendingOrder.amount}</p>
           </div>
           {
-            !pendingOrder.homeDelivery && (
+            pendingOrder.homeDelivery && (
               <div className="deliver-box">
-                <p className="delivery-address-text"><b>Deliver to:</b> 122, N.A Post Service Housing, Kingways, GRA - Ikeja</p>
+                <p className="delivery-address-text"><b>Deliver to:</b>{pendingOrder.deliveryAddress}</p>
               </div>
             )
           }
@@ -53,8 +53,8 @@ class IncomingOrders extends Component {
       <div key={pendingOrder._id} className="contain-order">
         <div className="order-box">
           <p>{pendingOrder.customerName}</p>
-          <p>08086082224</p>
-        </div>
+          <p>{pendingOrder.phone}</p>
+          </div>
         <div style={{ margin: 'auto' }}>
           {
             <b>{moment(pendingOrder.datetime).format('MMMM Do YYYY, h:mm a')}</b>
@@ -79,7 +79,7 @@ class IncomingOrders extends Component {
     return (
       <div className="orders-container">
         <p className="page-title">Incoming Orders</p>
-        {pendingOrders.length && pendingOrders.map(this.renderPendingOrder)}
+        {pendingOrders.length ? pendingOrders.map(this.renderPendingOrder) : 'Waiting for orders...'}
       </div>
     );
   }

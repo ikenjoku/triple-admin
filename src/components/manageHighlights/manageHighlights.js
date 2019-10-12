@@ -116,6 +116,7 @@ export class ManageHighlights extends Component {
   }
 
   render() {
+    const { isEditing, highlight } = this.state;
     const { highlights, isLoading } = this.props;
     const renderContent = highlights.length ? (
       <div className="contain-highlight-list">
@@ -128,7 +129,7 @@ export class ManageHighlights extends Component {
       <div>
         <p className="page-title">Manage Highlights</p>
         <div className="highlight-form-wrapper">
-          <h2 className="form-title">Add a new highlight</h2>
+          <h2 className="form-title">{ isEditing ? `Editing ${highlight.title}...` : 'Add a new highlight'}</h2>
           <form
             id="meal-form"
             onSubmit={this.onFormSubmit}
