@@ -11,6 +11,9 @@ import {
   EDIT_HIGHLIGHTS,
   EDIT_HIGHLIGHTS_SUCCESS,
   EDIT_HIGHLIGHTS_FAILURE,
+  DELETE_HIGHLIGHTS,
+  DELETE_HIGHLIGHTS_SUCCESS,
+  DELETE_HIGHLIGHTS_FAILURE,
 } from '../actionTypes';
 
 export const edit_highlight = () => ({
@@ -56,6 +59,21 @@ export const fetch_highlight_success = (highlights) => ({
 
 export const fetch_highlight_failure = (error) => ({
   type: FETCH_HIGHLIGHTS_FAILURE,
+  error,
+});
+
+export const delete_highlight = () => ({
+  type: DELETE_HIGHLIGHTS,
+  isLoading: true,
+});
+
+export const delete_highlight_success = (highlightId) => ({
+  type: DELETE_HIGHLIGHTS_SUCCESS,
+  highlightId,
+});
+
+export const delete_highlight_failure = (error) => ({
+  type: DELETE_HIGHLIGHTS_FAILURE,
   error,
 });
 
@@ -113,6 +131,21 @@ export const editHighlight = (updates, highlightId) => (dispatch) => {
         dispatch(edit_highlight_failure(error.response.data));
       } else {
         dispatch(edit_highlight_failure({ message: error.message }));
+      }
+    });
+};
+
+export const deleteHighlight = (highlightId) => (dispatch) => {
+  dispatch(delete_highlight());
+  return API.delete(`/highlights/${highlightId}`)
+    .then(response => {
+      dispatch(delete_highlight_success(highlightId));
+    })
+    .catch(error => {
+      if (error.response) {
+        dispatch(delete_highlight_failure(error.response.data));
+      } else {
+        dispatch(delete_highlight_failure({ message: error.message }));
       }
     });
 };
