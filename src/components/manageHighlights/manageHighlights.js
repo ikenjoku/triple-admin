@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addHighlight } from '../../redux/actions/highlightActions';
-import HighlightForm from './highlightForm';
+import { addHighlight, fetchHighlights } from '../../redux/actions/highlightActions';
 import './manageHighlights.css';
 
 export class ManageHighlights extends Component {
@@ -14,28 +13,6 @@ export class ManageHighlights extends Component {
       imageurl: '',
     },
     error: '',
-    meals: [
-      {
-        title: 'Cuisine Exposé',
-        details: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend. Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.',
-        imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg",
-      },
-      {
-        title: 'Cuisine Exposé',
-        details: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend. Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.',
-        imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg",
-      },
-      {
-        title: 'Cuisine Exposé',
-        details: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend. Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.',
-        imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg",
-      },
-      {
-        title: 'Cuisine Exposé',
-        details: 'Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend. Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend.',
-        imgurl: "https://res.cloudinary.com/ikeenjoku/image/upload/v1536724150/bookameal/2018-09-12T03:49:09.283ZUgwu-Archi.jpg.jpg",
-      },
-    ],
   }
 
   resetState = () => {
@@ -48,6 +25,10 @@ export class ManageHighlights extends Component {
       },
       error: '',
     });
+  }
+
+  componentDidMount () {
+    this.props.fetchHighlights();
   }
 
   onFormInput = (event) => {
@@ -103,7 +84,28 @@ export class ManageHighlights extends Component {
       </div>
     );
   }
+
+  renderNoContent = () => {
+    return (
+      <div>Nothing to see here</div>
+    );
+  }
+
+  renderLoader = () => {
+    return (
+      <div>Loading</div>
+    );
+  }
+
   render() {
+    const { highlights, isLoading } = this.props;
+    const renderContent = highlights.length ? (
+      <div className="contain-highlight-list">
+        {
+          highlights.map(this.renderHighlight)
+        }
+      </div>
+    ) : this.renderNoContent();
     return (
       <div>
         <p className="page-title">Manage Highlights</p>
@@ -162,20 +164,18 @@ export class ManageHighlights extends Component {
           </form>
           <hr />
         </div>
-        <div className="contain-highlight-list">
           {
-            this.state.meals.map(this.renderHighlight)
+            isLoading ? this.renderLoader() : renderContent
           }
-        </div>
       </div>
     )
   }
 }
 
 const mapStateToProps = ({ highlightReducer }) => ({
-  menu: highlightReducer.menu,
+  highlights: highlightReducer.highlights,
   isLoading: highlightReducer.isLoading,
   error: highlightReducer.error,
 });
 
-export default connect(mapStateToProps, { addHighlight })(ManageHighlights);
+export default connect(mapStateToProps, { addHighlight, fetchHighlights })(ManageHighlights);
