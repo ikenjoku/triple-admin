@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addHighlight, fetchHighlights } from '../../redux/actions/highlightActions';
+import { addHighlight, fetchHighlights, editHighlight } from '../../redux/actions/highlightActions';
 import './manageHighlights.css';
 
 export class ManageHighlights extends Component {
@@ -46,7 +46,8 @@ export class ManageHighlights extends Component {
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    const { title, details, imageurl } = this.state.highlight;
+    const { highlight, isEditing } = this.state;
+    const { title, details, imageurl } = highlight
     if (title && details && imageurl) {
       this.setState(() => ({ error: '' }));
 
@@ -54,8 +55,14 @@ export class ManageHighlights extends Component {
       formData.append('title', title);
       formData.append('details', details);
       formData.append('imgurl', imageurl);
-      this.props.addHighlight(formData);
-      this.resetState();
+
+      if (isEditing) {
+        this.props.editHighlight(formData, highlight._id);
+        this.resetState();
+      } else {
+        this.props.addHighlight(formData);
+        this.resetState();
+      }
     } else {
       this.setState(() => ({ error: 'Please fill all the fields' }));
     }
@@ -71,7 +78,7 @@ export class ManageHighlights extends Component {
           <p><strong>{highlight.title}</strong></p>
           <div>
             <span style={{ margin: '10px' }}>
-              <FontAwesomeIcon icon="edit" className="edit-btn" />
+              <FontAwesomeIcon onClick={() => this.handleEditHighlight(highlight)} icon="edit" className="edit-btn" />
             </span>
             <span style={{ margin: '10px' }}>
               <FontAwesomeIcon icon="trash-alt" className="remove-btn" />
@@ -83,6 +90,13 @@ export class ManageHighlights extends Component {
         </div>
       </div>
     );
+  }
+
+  handleEditHighlight = (highlight) => {
+    this.setState({
+      highlight,
+      isEditing: true,
+    });
   }
 
   renderNoContent = () => {
@@ -178,4 +192,4 @@ const mapStateToProps = ({ highlightReducer }) => ({
   error: highlightReducer.error,
 });
 
-export default connect(mapStateToProps, { addHighlight, fetchHighlights })(ManageHighlights);
+export default connect(mapStateToProps, { addHighlight, fetchHighlights, editHighlight })(ManageHighlights);
