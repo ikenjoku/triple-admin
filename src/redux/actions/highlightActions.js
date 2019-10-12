@@ -8,7 +8,26 @@ import {
   FETCH_HIGHLIGHTS,
   FETCH_HIGHLIGHTS_SUCCESS,
   FETCH_HIGHLIGHTS_FAILURE,
+  EDIT_HIGHLIGHTS,
+  EDIT_HIGHLIGHTS_SUCCESS,
+  EDIT_HIGHLIGHTS_FAILURE,
 } from '../actionTypes';
+
+export const edit_highlight = () => ({
+  type: EDIT_HIGHLIGHTS,
+  isLoading: true,
+});
+
+export const edit_highlight_success = (updatedHighlight, highlightId) => ({
+  type: EDIT_HIGHLIGHTS_SUCCESS,
+  updatedHighlight,
+  highlightId,
+});
+
+export const edit_highlight_failure = (error) => ({
+  type: EDIT_HIGHLIGHTS_FAILURE,
+  error,
+});
 
 export const add_highlight = () => ({
   type: ADD_HIGHLIGHTS,
@@ -79,6 +98,21 @@ export const fetchHighlights = () => (dispatch) => {
         notification.error({
           message: error.message,
         });
+      }
+    });
+};
+
+export const editHighlight = (updates, highlightId) => (dispatch) => {
+  dispatch(edit_highlight());
+  return API.put(`/highlights/${highlightId}`, updates)
+    .then(response => {
+      dispatch(fetchHighlights());
+    })
+    .catch(error => {
+      if (error.response) {
+        dispatch(edit_highlight_failure(error.response.data));
+      } else {
+        dispatch(edit_highlight_failure({ message: error.message }));
       }
     });
 };
