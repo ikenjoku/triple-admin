@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addHighlight } from '../../redux/actions/highlightActions';
 import PropTypes from 'prop-types';
 
 class HighlightForm extends Component {

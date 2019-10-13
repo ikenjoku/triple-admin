@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
+import { loginUser } from "../../redux/actions/authActions";
 import Header from '../header/header';
 import './login.scss'
 
@@ -19,24 +22,24 @@ export class Login extends Component {
     this.setState(() => ({ data }));
   }
 
-  // onSubmit = (event) => {
-  //   event.preventDefault();
-  //   const { data: { email, password } } = this.state;
-  //   if (email && password) {
-  //     this.setState(() => ({ error: '' }));
-
-  //     this.props.loginAUser({ email, password });
-  //   } else {
-  //     this.setState(() => ({ error: 'email and password are required' }));
-  //   }
-  // }
+  onSubmit = (event) => {
+    event.preventDefault();
+    const { data: { email, password } } = this.state;
+    if (email && password) {
+      this.setState(() => ({ error: '' }));
+      this.props.loginUser({ email, password });
+    } else {
+      this.setState(() => ({ error: 'Your email and password are required' }));
+    }
+  }
 
   render() {
     return (
+      this.props.user ? <Redirect to="/app/orders" /> :
       <div>
         <Header />
         <main className="main-content login-bg">
-        <form id="login-form" className="form-wrapper">
+        <form id="login-form" className="form-wrapper" onSubmit={this.onSubmit}>
           <h2 className="center">Login</h2>
           {this.state.error &&
           <div className="alert alert-danger">
@@ -77,4 +80,9 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = ({ authReducer }) => ({
+  isLoading: authReducer.isLoading,
+  user: authReducer.user,
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);
