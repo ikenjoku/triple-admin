@@ -4,8 +4,9 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 
 import NoMatch from '../noMatch';
-import SideNavbar from '../../widget/sider';
 import Header from '../../widget/header';
+import SideNavbar from '../../widget/sider';
+import NotificationManger from '../../utils/socket'
 import { staffRouteConfig, managerRouteConfig } from "../../routes/mainRoutes";
 import './main.css';
 
@@ -46,6 +47,10 @@ class Main extends Component {
   state = {
     collapsed: true,
   };
+
+  componentDidMount() {
+    NotificationManger(this.props.user.id);
+  }
 
   toggleSideBar = () => {
     this.setState({
