@@ -1,10 +1,48 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPendingOrders } from '../../redux/actions/orderActions';
+import {
+  fetchPendingOrders,
+  handleUpdateOrder,
+  handleCancelOrder,
+  handleUpdateReservation,
+  handleCancelReservation,
+} from '../../redux/actions/orderActions';
 import moment from 'moment';
 
 
 import './incomingOrders.css';
+
+const ActionButtons = ({ orderId, orderStatus, handleUpdateOrder, handleCancelOrder }) => {
+  const nextState = {
+    cancelled: '',
+    pending: ['Cancel', 'Confirm'],
+    confirmed: 'Complete',
+    completed: '',
+  };
+
+  if (orderStatus === 'pending') {
+    const [Cancel, Confirm] = nextState[orderStatus];
+
+    return (
+      <div className="contain-pending-buttons">
+        <button onClick={() => handleUpdateOrder(orderId)} className="action-btn">{Confirm}</button>
+        <button onClick={() => handleCancelOrder(orderId)} className="action-btn">{Cancel}</button>
+      </div>
+    );
+  } else {
+    if (orderStatus === 'cancelled' || orderStatus === 'completed' ) {
+      return (
+      <div className="contain-pending-buttons">
+      </div>
+    );
+  }
+  return (
+    <div className="contain-pending-buttons">
+      <button className="action-btn" onClick={() => handleUpdateOrder(orderId)}>{nextState[orderStatus]}</button>
+    </div>
+  );
+};
+}
 
 class IncomingOrders extends Component {
 
@@ -13,6 +51,8 @@ class IncomingOrders extends Component {
   }
 
   renderPendingOrder = (pendingOrder) => {
+    const { handleCancelOrder, handleUpdateOrder, handleCancelReservation, handleUpdateReservation } = this.props;
+
     if (pendingOrder.seats === undefined) {
       return (
         <div key={pendingOrder._id} className="contain-order">
@@ -42,10 +82,12 @@ class IncomingOrders extends Component {
           <div className="order-box">
             <p>{pendingOrder.status}</p>
           </div>
-          <div className="contain-pending-buttons">
-          <button className="action-btn">Confirm</button>
-          <button className="action-btn">Cancel</button>
-          </div>
+          <ActionButtons
+            orderId={pendingOrder._id}
+            orderStatus={pendingOrder.status}
+            handleCancelOrder={handleCancelOrder}
+            handleUpdateOrder={handleUpdateOrder}
+          />
         </div>
       );
     }
@@ -66,10 +108,12 @@ class IncomingOrders extends Component {
         <div className="order-box">
           <p>{pendingOrder.status}</p>
         </div>
-        <div className="contain-pending-buttons">
-          <button className="action-btn">Confirm</button>
-          <button className="action-btn">Cancel</button>
-        </div>
+        <ActionButtons
+          orderId={pendingOrder._id}
+          orderStatus={pendingOrder.status}
+          handleCancelOrder={handleCancelReservation}
+          handleUpdateOrder={handleUpdateReservation}
+        />
       </div>
     );
   }
@@ -92,4 +136,10 @@ const mapStateToProps = ({ orderReducer }) => ({
 });
 
 
-export default connect(mapStateToProps, { fetchPendingOrders })(IncomingOrders);
+export default connect(mapStateToProps, {
+  fetchPendingOrders,
+  handleUpdateOrder,
+  handleCancelOrder,
+  handleCancelReservation,
+  handleUpdateReservation,
+})(IncomingOrders);
